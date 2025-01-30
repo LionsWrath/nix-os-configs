@@ -1,0 +1,88 @@
+{
+    "layer": "top",
+        "position": "top",
+        "reload_style_on_change": true,
+        "modules-left": ["clock"],
+        "modules-center": ["hyprland/workspaces"],
+        "modules-right": ["group/expand","network","battery"],
+
+
+        "hyprland/workspaces": {
+            "format": "{icon}",
+            "format-icons": {
+                "active": "",
+                "default": "",
+                "empty": ""
+            },
+            "persistent-workspaces": {
+                "*": [ 1,2,3,4,5 ]
+            }
+        },
+        "clock": {
+            "format": "{:%I:%M:%S %p}",
+            "interval": 1,   
+            "tooltip-format": "<tt>{calendar}</tt>",
+            "calendar": {
+                "format": {
+                    "today": "<span color='#fAfBfC'><b>{}</b></span>"
+                }
+            },
+            "actions": {
+                "on-click-right": "shift_down",
+                "on-click": "shift_up"
+            }
+        },
+        "network": {
+            "format-wifi": "",
+            "format-ethernet":"",
+            "format-disconnected": "",
+        },
+        "battery": {
+            "interval":1,
+            "states": {
+                "good": 95,
+                "warning": 30,
+                "critical": 20
+            },
+            "format": "{capacity}% {icon}",
+            "format-charging": "{capacity}% 󰂄",
+            "format-plugged": "{capacity}% 󰂄 ",
+            "format-alt": "{time} {icon}",
+            "format-icons": [
+                "󰁻",
+            "󰁼",
+            "󰁾",
+            "󰂀",
+            "󰂂",
+            "󰁹"
+            ],
+        },
+        "custom/expand": {
+            "format": "",
+            "tooltip": false
+        },
+        "custom/endpoint":{
+            "format": "|",
+            "tooltip": false
+        },
+        "group/expand": {
+            "orientation": "horizontal",
+            "drawer": {
+                "transition-duration": 600,
+                "transition-to-left": true,
+                "click-to-reveal": true
+            },
+            "modules": ["custom/expand","cpu","memory","temperature","custom/endpoint"],
+        },
+        "cpu": {
+            "format": "󰻠",
+            "tooltip": true
+        },
+        "memory": {
+            "format": ""
+        },
+        "temperature": {
+            "critical-threshold": 80,
+            "format": "",
+        },
+} 

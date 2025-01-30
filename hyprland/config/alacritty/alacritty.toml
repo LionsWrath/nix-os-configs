@@ -1,0 +1,18 @@
+[font]
+
+[font.bold]
+family = "Fira Mono"
+style = "Bold"
+
+[font.bold_italic]
+family = "Fira Mono"
+style = "Bold Italic"
+
+[font.italic]
+family = "Fira Mono"
+style = "Italic"
+
+[font.normal]
+family = "Fira Mono"
+style = "Regular"
+
