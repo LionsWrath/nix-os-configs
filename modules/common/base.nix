@@ -31,9 +31,9 @@
     format = "$username$hostname$directory$git_branch$git_status$python$nodejs$rust$docker_context$line_break$character";
   };
 
-  programs.zsh.promptInit = ""
+  programs.zsh.interactiveShellInit = ''
     eval "$(starship init zsh)"
-  "";
+  '';
 
   environment.systemPackages = with pkgs; [
     git
