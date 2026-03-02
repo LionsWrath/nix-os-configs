@@ -22,6 +22,13 @@
 
   services.openssh.enable = true;
 
+
+  environment.shellAliases = {
+    nrb = "sudo nixos-rebuild switch --flake .#hichi";
+    nrbh = "sudo nixos-rebuild switch --flake .#hichi";
+    nrt = "sudo nixos-rebuild test --flake .#hichi";
+  };
+
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
