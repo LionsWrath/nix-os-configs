@@ -18,7 +18,12 @@
           ./hyprland/configuration.nix
         ];
 
-        # New host-profile layout (target: Proxmox VM)
+        # Host-agnostic devbox baseline
+        devbox = mkSystem "x86_64-linux" [
+          ./hosts/devbox/default.nix
+        ];
+
+        # Concrete host profile (target: Proxmox VM)
         hichi = mkSystem "x86_64-linux" [
           ./hosts/hichi/default.nix
         ];

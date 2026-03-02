@@ -25,6 +25,16 @@
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
+  programs.starship.enable = true;
+  programs.starship.settings = {
+    add_newline = false;
+    format = "$username$hostname$directory$git_branch$git_status$python$nodejs$rust$docker_context$line_break$character";
+  };
+
+  programs.zsh.promptInit = ""
+    eval "$(starship init zsh)"
+  "";
+
   environment.systemPackages = with pkgs; [
     git
     wget
