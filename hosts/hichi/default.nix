@@ -1,9 +1,14 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [
     ../devbox/default.nix
     ./hardware-configuration.nix
   ];
+
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/vda";
+  };
 
   networking.hostName = "hichi-devbox";
 
@@ -12,10 +17,13 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP9wPZ+cAFB6nFo3QjDD49encZWzqlIjt3Sf0nZ99KYH caio.tonetti@gmail.com"
   ];
 
-  services.openssh.settings = {
-    PasswordAuthentication = false;
-    KbdInteractiveAuthentication = false;
-    PubkeyAuthentication = true;
-    PermitRootLogin = "no";
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+      PubkeyAuthentication = true;
+    };
   };
 }
