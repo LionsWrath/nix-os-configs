@@ -13,7 +13,7 @@
   users.users.lionswrath = {
     isNormalUser = true;
     description = "lionswrath";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
   };
 

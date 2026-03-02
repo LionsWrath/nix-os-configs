@@ -5,7 +5,11 @@
 
   programs.git.enable = true;
 
+  # Docker stack
+  virtualisation.docker.enable = true;
+
   environment.systemPackages = with pkgs; [
+    # Core tooling
     curl
     jq
     yq
@@ -13,9 +17,30 @@
     fd
     htop
     tmux
+
+    # Python stack
     python3
-    nodejs
-    go
+    python3Packages.pip
+    python3Packages.virtualenv
+    pyright
+    ruff
+
+    # Node stack
+    nodejs_22
+    yarn
+    pnpm
+    typescript
+    nodePackages.npm-check-updates
+
+    # Rust stack
     rustup
+    cargo
+    rustc
+    clippy
+    rustfmt
+
+    # Containers / dev ops
+    docker-compose
+    lazydocker
   ];
 }
