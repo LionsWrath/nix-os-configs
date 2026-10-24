@@ -8,6 +8,12 @@
   # Docker stack
   virtualisation.docker.enable = true;
 
+  # Tailnet access to internal services
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
+  };
+
   # tmux baseline (improved from ArchConfig)
   programs.tmux = {
     enable = true;

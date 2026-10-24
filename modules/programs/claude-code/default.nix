@@ -47,6 +47,8 @@ in
           if (.statusLine == null)
              or ((.statusLine.command // "") | test("claude-statusline$|/\\.claude/statusline\\.sh$"))
           then .statusLine = $sl else . end
+          # Compact earlier than the model maximum (user-overridable default)
+          | .autoCompactWindow //= 400000
         ' "$settings" > "$tmp"; then
         ${pkgs.coreutils}/bin/install -m 644 -o ${user} -g users "$tmp" "$settings"
       else
