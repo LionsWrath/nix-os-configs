@@ -3,13 +3,17 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+
+    # Only for packages that move faster than the stable channel (e.g. claude-code)
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
-  outputs = { self, nixpkgs, ... }:
+  outputs = { self, nixpkgs, ... } @ inputs:
     let
       mkSystem = system: modules:
         nixpkgs.lib.nixosSystem {
           inherit system modules;
+          specialArgs = { inherit inputs; };
         };
     in {
       nixosConfigurations = {

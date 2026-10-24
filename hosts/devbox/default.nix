@@ -3,6 +3,7 @@
   imports = [
     ../../modules/common/base.nix
     ../../modules/profiles/devbox.nix
+    ../../modules/programs/claude-code
 
     # Add per-VM generated hardware profile in concrete host files:
     # ./hardware-configuration.nix
