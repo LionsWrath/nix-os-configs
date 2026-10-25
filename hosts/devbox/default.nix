@@ -4,6 +4,7 @@
     ../../modules/common/base.nix
     ../../modules/profiles/devbox.nix
     ../../modules/programs/claude-code
+    ../../modules/programs/opencode
 
     # Add per-VM generated hardware profile in concrete host files:
     # ./hardware-configuration.nix
