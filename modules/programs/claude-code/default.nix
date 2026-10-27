@@ -57,4 +57,25 @@ in
       rm -f "$tmp"
     '';
   };
+
+  # User-level skills, symlinked into ~/.claude/skills so every session sees
+  # them. Only symlinks are replaced; a real directory of the same name is
+  # left alone.
+  system.activationScripts.claudeCodeSkills = {
+    deps = [ "users" ];
+    text = ''
+      skills=${lib.escapeShellArg "/home/${user}/.claude/skills"}
+      ${pkgs.coreutils}/bin/install -d -o ${user} -g users "$skills"
+      for src in ${./skills}/*/; do
+        name=$(${pkgs.coreutils}/bin/basename "$src")
+        dest="$skills/$name"
+        if [ -L "$dest" ] || [ ! -e "$dest" ]; then
+          ${pkgs.coreutils}/bin/ln -sfn "''${src%/}" "$dest"
+          ${pkgs.coreutils}/bin/chown -h ${user}:users "$dest"
+        else
+          echo "claude-code: $dest is not a symlink, leaving it alone" >&2
+        fi
+      done
+    '';
+  };
 }
