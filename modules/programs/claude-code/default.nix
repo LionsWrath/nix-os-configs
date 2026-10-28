@@ -78,4 +78,40 @@ in
       done
     '';
   };
+
+  # Global rules and infra skills from the claude-infra checkout (private
+  # Gitea repo, not a flake input), linked live like the skills above. Other
+  # tools append their own imports to ~/.claude/CLAUDE.md, so it stays a
+  # regular file and only the claude-infra import line is ensured, first.
+  # Skipped when the checkout is missing.
+  system.activationScripts.claudeCodeInfra = {
+    deps = [ "users" "claudeCodeSkills" ];
+    text = ''
+      infra=${lib.escapeShellArg "/home/${user}/Documents/claude-infra"}
+      claude=${lib.escapeShellArg "/home/${user}/.claude"}
+      if [ -f "$infra/CLAUDE.md" ]; then
+        rules="$claude/CLAUDE.md"
+        line="@$infra/CLAUDE.md"
+        if ! ${pkgs.gnugrep}/bin/grep -qxF "$line" "$rules" 2>/dev/null; then
+          tmp=$(${pkgs.coreutils}/bin/mktemp)
+          { printf '%s\n' "$line"; [ -f "$rules" ] && ${pkgs.coreutils}/bin/cat "$rules"; } > "$tmp"
+          ${pkgs.coreutils}/bin/install -m 644 -o ${user} -g users "$tmp" "$rules"
+          rm -f "$tmp"
+        fi
+        for src in "$infra"/skills/*/; do
+          [ -f "$src/SKILL.md" ] || continue
+          name=$(${pkgs.coreutils}/bin/basename "$src")
+          dest="$claude/skills/$name"
+          if [ -L "$dest" ] || [ ! -e "$dest" ]; then
+            ${pkgs.coreutils}/bin/ln -sfn "''${src%/}" "$dest"
+            ${pkgs.coreutils}/bin/chown -h ${user}:users "$dest"
+          else
+            echo "claude-code: $dest is not a symlink, leaving it alone" >&2
+          fi
+        done
+      else
+        echo "claude-code: no claude-infra checkout at $infra, skipping its rules and skills" >&2
+      fi
+    '';
+  };
 }
