@@ -60,6 +60,7 @@ in
       OPENCODE_CONFIG = "/opt/orochi/opencode.json";
       LOOM_URL = "http://127.0.0.1:7400";
       FABRIC_URL = "http://127.0.0.1:7410";
+      FORGE_URL = "http://127.0.0.1:7420";
     };
 
     serviceConfig = {
