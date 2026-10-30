@@ -3,6 +3,7 @@
   imports = [
     ../devbox/default.nix
     ./hardware-configuration.nix
+    ../../modules/services/orochi-opencode.nix
   ];
 
   boot.loader.grub = {
