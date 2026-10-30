@@ -26,8 +26,16 @@ let
     export OPENCODE_SERVER_PASSWORD OPENROUTER_API_KEY
     exec ${opencode}/bin/opencode serve --hostname 0.0.0.0 --port ${toString port}
   '';
+
+  # The agent's shell is a zsh login shell, and /etc/zshenv resets PATH, so the `orochi` client the
+  # Loom skills use must be on the system PATH, not only the service's.
+  orochi = pkgs.writeShellScriptBin "orochi" ''
+    exec ${loom}/docker/opencode/bin/orochi "$@"
+  '';
 in
 {
+  environment.systemPackages = [ orochi ];
+
   systemd.tmpfiles.rules = [
     "d ${loom}/data/opencode-config 0755 ${user} users -"
     "L+ ${loom}/data/opencode-config/AGENTS.md - - - - ${loom}/docker/opencode/AGENTS.md"
@@ -40,10 +48,8 @@ in
     wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
 
-    # The user's login PATH, plus the `orochi` client the Loom skills use.
-    # Each entry contributes its bin/.
+    # The user's login PATH, for the server itself (agent shells set their own). Each entry gives its bin/.
     path = [
-      "${loom}/docker/opencode"
       "/run/wrappers"
       "/etc/profiles/per-user/${user}"
       "${home}/.nix-profile"
