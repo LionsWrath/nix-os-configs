@@ -12,7 +12,9 @@
 # opencode.json turn risky commands into approvals in the app; they are guards, not a boundary.
 { pkgs, ... }:
 let
-  opencode = pkgs.callPackage ../programs/opencode/package.nix { };
+  # The release Forge's adapter for it is deployed for. Forge detects the API at startup, so moving
+  # to 2.2.5 needs a Forge with the 2.x adapter running first; OpenCode then migrates the sessions.
+  opencode = pkgs.callPackage ../programs/opencode/package.nix { release = "1.19.4"; };
   user = "lionswrath";
   home = "/home/${user}";
   loom = "${home}/Projects/orochi-loom";
