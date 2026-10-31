@@ -6,11 +6,11 @@
 
 stdenv.mkDerivation rec {
   pname = "opencode";
-  version = "1.19.4";
+  version = "1.19.5";
 
   src = fetchurl {
     url = "https://registry.npmjs.org/opencode-linux-x64/-/opencode-linux-x64-${version}.tgz";
-    hash = "sha512-rQ/l3jmJoxf8ZYnBargg9alURlz6buEilysGODtzkcmcYtcZ91LOgF034oUUHHQl8/y1hbRTDvg6ujqUjQsMXw==";
+    hash = "sha512-i1qh7VooLGML9xX6ud93y0JA8j/1aPeDYRKjsmYXrJX1TjIWHgBBMkEbEJPZthpWbsJg//XfBgR6Kb7+NPaJiQ==";
   };
 
   sourceRoot = "package";
