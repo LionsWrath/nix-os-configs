@@ -12,9 +12,10 @@
 # opencode.json turn risky commands into approvals in the app; they are guards, not a boundary.
 { pkgs, ... }:
 let
-  # The release Forge's adapter for it is deployed for. Forge detects the API at startup, so moving
-  # to 2.2.5 needs a Forge with the 2.x adapter running first; OpenCode then migrates the sessions.
-  opencode = pkgs.callPackage ../programs/opencode/package.nix { release = "1.19.4"; };
+  # Forge has an adapter per OpenCode API and detects which one runs when it starts, so restart Forge
+  # after changing the release. 2.2.5 migrated Loom's 1.19.4 sessions on first start (one-way; the
+  # 1.19.4 data is in orochi-loom/backups/opencode-before-2.2.5-20261031-013233).
+  opencode = pkgs.callPackage ../programs/opencode/package.nix { release = "2.2.5"; };
   user = "lionswrath";
   home = "/home/${user}";
   loom = "${home}/Projects/orochi-loom";
